@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class controlbola : MonoBehaviour
 {
-    public Transform camaraPrincipal;
+   
 
     public Rigidbody rb;
 
@@ -16,10 +17,13 @@ public class controlbola : MonoBehaviour
 
     private bool haSidolansada = false;
 
+    public CameraFollow cameraFollow;
+    public ScoreManager scoreManager;
+
     // Start is called before the first frame update
     void Start()
     {
-     
+     rb= GetComponent <Rigidbody>();
     }
 
     // Update is called once per frame
@@ -56,10 +60,38 @@ public class controlbola : MonoBehaviour
         haSidolansada = true;
         rb.AddForce(Vector3.forward * fuerzaDeLanzamiento);
 
-        if (camaraPrincipal != null)
+        if (cameraFollow != null) cameraFollow.IniciarSeguimiento();
+
+        if (rb != null)
         {
-            camaraPrincipal.SetParent(transform);
+            rb.AddForce(Vector3.forward * fuerzaDeLanzamiento);
         }
+        else
+        {
+            Debug.LogWarning("El rigidbody no esta asignado en" + gameObject.name);
+        }
+    }
+
+       
+
+      void OnCollisionEnter(Collision collision) 
+        {
+            if (collision.gameObject.CompareTag("Pin"))
+            {
+                 if (cameraFollow != null) cameraFollow.DetenerSeguimiento ();
+
+
+                if (scoreManager != null) Invoke("CalcularPuntaje", 0f);
+              
+            }
+        }
+
+       void CalcularPuntaje()
+    { 
+           
+             scoreManager.CalcularPuntaje();
+            
+
 
     }
 
