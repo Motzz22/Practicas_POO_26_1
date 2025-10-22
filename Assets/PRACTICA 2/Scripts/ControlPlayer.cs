@@ -17,7 +17,7 @@ public class ControlPlayer : MonoBehaviour
     //Variables Vista
 
     public Transform camara; //registra que camara sirve como los ojos del jugador
-    public float sensibilidadMouse = 200f; //que tan rapido se mueve el mouse a la hora de voltear la vista 
+    public float sensibilidadMouse = 500f; //que tan rapido se mueve el mouse a la hora de voltear la vista 
     private float rotacionXVertical = 0F; //indica los grados que el jugador puede ver tanto como arriba como abajo
 
     void Start()
